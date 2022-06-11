@@ -1,0 +1,14 @@
+[
+  {
+    "nombre": "andres",
+    "estado": "activo"
+  },
+  {
+    "nombre": "isa",
+    "estado": "inactivo"
+  },
+  {
+    "nombre": "yaricsa",
+    "estado": "otro"
+  }
+]
