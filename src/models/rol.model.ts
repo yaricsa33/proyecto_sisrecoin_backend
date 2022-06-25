@@ -1,49 +1,75 @@
+import { IResponse } from "interface/response.interface";
 import { IRol } from "interface/rol.interface";
 import dbConn from "./db.config";
 
-export const buscarRol = (): Promise<IRol[]> => {
+export const buscarRol = (): Promise<IResponse> => {
   return new Promise((resolve, reject) => {
     dbConn.query("select * from rol", (err, res: IRol[]) => {
-      if (err) reject('error en la consulta ');
-      resolve(res)
+      let response: IResponse = {} as IResponse;
+      if (err) {
+        response = { ...response, error: 400, mensaje: 'error' }
+        reject(response);
+      } else {
+        response = { data: res, error: 200, mensaje: 'exito' }
+        resolve(response);
+      }
     });
   })
 }
 
-export const buscarRolPorId = (id: number): Promise<IRol> => {
+export const buscarRolPorId = (id: number): Promise<IResponse> => {
   return new Promise((resolve, reject) => {
     dbConn.query(`select * from rol where idRol = ${id}`, (err, res: IRol) => {
-      if (err) reject('error en la consulta ');
-      resolve(res)
+      let response: IResponse = {} as IResponse;
+      if (err) {
+        response = { ...response, error: 400, mensaje: 'error' }
+        reject(response);
+      } else {
+        response = { data: res[0], error: 200, mensaje: 'exito' }
+        resolve(response);
+      }
     })
   })
 }
 
 
-export const insertarRol = (rol: IRol): Promise<IRol> => {
+export const insertarRol = (rol: IRol): Promise<IResponse> => {
+  console.log(rol);
   return new Promise((resolve, reject) => {
     dbConn.query(
       `call insertRol(
         '${rol.nombre}',
-        '${rol.descripcion}',
+        '${rol.descripcion}'
       )`, (err, res: IRol) => {
-      if (err) reject('Error al insertar');
-      resolve(res)
+      let response: IResponse = {} as IResponse;
+      if (err) {
+        response = { ...response, error: 400, mensaje: 'error' }
+        reject(response);
+      } else {
+        response = { data: res, error: 200, mensaje: 'exito' }
+        resolve(response);
+      }
     })
   })
 }
 
 
-export const actualizarRol = (rol: IRol): Promise<IRol> => {
+export const actualizarRol = (rol: IRol): Promise<IResponse> => {
   return new Promise((resolve, reject) => {
     dbConn.query(
       `call updateRol(
         ${rol.idRol},
         '${rol.nombre}',
-        '${rol.descripcion}',
+        '${rol.descripcion}'
       )`, (err, res: IRol) => {
-      if (err) reject('Error al actualizar');
-      resolve(res)
+      let response: IResponse = {} as IResponse;
+      if (err) {
+        response = { ...response, error: 400, mensaje: 'error' }
+        reject(response);
+      } else {
+        response = { data: res, error: 200, mensaje: 'exito' }
+        resolve(response);
+      }
     })
   })
 }
@@ -52,8 +78,14 @@ export const actualizarRol = (rol: IRol): Promise<IRol> => {
 export const eliminarRolPorId = (id: number): Promise<any> => {
   return new Promise((resolve, reject) => {
     dbConn.query(`Delete from rol where idRol = ${id}`, (err, res: any) => {
-      if (err) reject('Error al eliminar');
-      resolve(res)
+      let response: IResponse = {} as IResponse;
+      if (err) {
+        response = { ...response, error: 400, mensaje: 'error' }
+        reject(response);
+      } else {
+        response = { data: res, error: 200, mensaje: 'exito' }
+        resolve(response);
+      }
     });
   })
 }

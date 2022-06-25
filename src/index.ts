@@ -7,6 +7,13 @@ var cors = require('cors')
 import usuarioRouter from './routes/usuario.routes'
 import rolRouter from './routes/rol.routes'
 import permisoRouter from './routes/permiso.routes'
+import authRouter from './routes/autenticacion.routes'
+import materiaPrimaRouter from './routes/materiaPrima.routes'
+import muebleRouter from './routes/mueble.routes'
+import ventaRouter from './routes/venta.routes'
+
+
+
 
 const app = express();
 
@@ -26,6 +33,11 @@ app.get('/ping', (_req, res) => {
 app.use('/usuario', usuarioRouter);
 app.use('/rol', rolRouter);
 app.use('/permiso', permisoRouter)
+app.use('/autenticacion', authRouter)
+app.use('/materiaPrima', materiaPrimaRouter)
+app.use('/mueble', muebleRouter)
+app.use('/venta', ventaRouter);
+
 
 app.listen(PORT, () => {
   console.log(`El servidor esta en el puerto ${PORT}`)

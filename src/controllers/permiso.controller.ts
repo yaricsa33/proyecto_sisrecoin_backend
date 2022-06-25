@@ -5,6 +5,9 @@ export const getPermiso = (_req: any, res: any) => {
     .then(data => {
       res.json(data);
     })
+    .catch(err => {
+      res.json(err);
+    })
 }
 
 
@@ -12,6 +15,9 @@ export const getPermisoPorId = (req: any, res: any) => {
   buscarPermisoPorId(req.params.id)
     .then(data => {
       res.json(data);
+    })
+    .catch(err => {
+      res.json(err);
     })
 
 }
@@ -21,6 +27,9 @@ export const postInsertarPermiso = (req: any, res: any) => {
     .then(data => {
       res.json(data);
     })
+    .catch(err => {
+      res.json(err);
+    })
 }
 
 export const putActualizarPermiso = (req: any, res: any) => {
@@ -28,12 +37,18 @@ export const putActualizarPermiso = (req: any, res: any) => {
     .then(data => {
       res.json(data);
     })
+    .catch(err => {
+      res.json(err);
+    })
 }
 
 export const deleteEliminarPermiso = (req: any, res: any) => {
   eliminarPermisoPorId(req.params.id)
     .then(data => {
       res.json(data);
+    })
+    .catch(err => {
+      res.json(err);
     })
 }
 
