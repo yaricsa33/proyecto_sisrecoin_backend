@@ -8,7 +8,8 @@
     "tsc": "tsc",
     "start": "node index.js",
     "dev": "ts-node-dev src/index.ts",
-    "lint": "ts-standard"
+    "lint": "ts-standard",
+    "build":"tsc"
   },
   "keywords": [],
   "author": "",
@@ -23,7 +24,8 @@
   },
   "devDependencies": {
     "ts-standard": "^11.0.0",
-    "typescript": "4.6.4"
+    "typescript": "4.6.4",
+    "tsc":"4.7.4"
   },
   "engines": {
     "node": "16.x",
