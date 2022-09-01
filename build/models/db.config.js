@@ -15,7 +15,9 @@ dbConn.connect(function (err) {
         throw err;
     console.log("Base de datos conectada");
 });
-setInterval(function () {
-    dbConn.query('SELECT 1');
-}, 5000);
+dbConn.query('SELECT 1 + 1 AS solution', function (error, results) {
+    if (error)
+        throw error;
+    console.log('The solution is: ', results[0].solution);
+});
 exports.default = dbConn;
