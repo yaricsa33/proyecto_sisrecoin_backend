@@ -1,0 +1,11 @@
+"use strict";
+exports.__esModule = true;
+var express_1 = require("express");
+var materiaPrima_controller_1 = require("../controllers/materiaPrima.controller");
+var router = express_1["default"].Router();
+router.get('/', materiaPrima_controller_1.getMateriaPrima);
+router.get('/:id', materiaPrima_controller_1.getbuscarMateriaPrimaPorId);
+router.post('/', materiaPrima_controller_1.postInsertarMateriaPrima);
+router.put('/', materiaPrima_controller_1.putActualizarMateriaPrima);
+router["delete"]('/:id', materiaPrima_controller_1.deleteMateriaPrimaPorId);
+exports["default"] = router;

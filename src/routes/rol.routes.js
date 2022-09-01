@@ -1,0 +1,11 @@
+"use strict";
+exports.__esModule = true;
+var express_1 = require("express");
+var rol_controller_1 = require("../controllers/rol.controller");
+var router = express_1["default"].Router();
+router.get('/', rol_controller_1.getRol);
+router.get('/:id', rol_controller_1.getRolPorId);
+router.post('/', rol_controller_1.postInsertarRol);
+router.put('/', rol_controller_1.putActualizarRol);
+router["delete"]('/:id', rol_controller_1.deleteEliminarRol);
+exports["default"] = router;
