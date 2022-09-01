@@ -19,7 +19,7 @@ app.use(cors());
 app.use(body_parser_1.default.urlencoded({ extended: true }));
 // parse requests of content-type - application/json
 app.use(body_parser_1.default.json());
-const PORT = 3000;
+const PORT = process.env.PORT || 3050;
 app.get('/ping', (_req, res) => {
     console.log('Api funcionando ya');
     res.send('ping yari dd');
