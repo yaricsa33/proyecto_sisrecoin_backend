@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // parse requests of content-type - application/json
 app.use(bodyParser.json())
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3050;
 
 app.get('/ping', (_req, res) => {
   console.log('Api funcionando ya');
