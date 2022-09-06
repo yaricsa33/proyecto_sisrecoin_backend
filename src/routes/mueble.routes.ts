@@ -16,7 +16,7 @@ const router = express.Router();
 
 router.get("/", getBuscarMueble);
 router.get("/:id", getMueblePorId);
-router.get("/asignarMueblePorId/:id", getMueblesAsignadosUsuarioPorId);
+router.get("/mueblesAsignadosTrabajador/:id", getMueblesAsignadosUsuarioPorId);
 router.get("/usuariosAsigandosMueble/:id", getUsuariosAsignadosMueble);
 router.get(
   "/materiasPrimasAsigandosMueble/:id",
@@ -25,7 +25,7 @@ router.get(
 router.post("/", postInsertarMueble);
 router.post("/listados", postInsertarMuebleListados);
 router.put("/", putActualizarMueble);
-router.put("/finalizarMueble/:idUsuario/:idMueble", putFinalizarMueble);
+router.put("/finalizarMueble", putFinalizarMueble);
 router.delete("/:id", deleteMueblePorId);
 
 export default router;

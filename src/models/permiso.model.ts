@@ -4,35 +4,66 @@ import dbConn from "./db.config";
 
 export const buscarPermiso = (): Promise<IResponse> => {
   return new Promise((resolve, reject) => {
-    dbConn.query("Select * from permiso", (err, res: IPermiso[]) => {
-      let response: IResponse = {} as IResponse;
-      if (err) {
-        response = { ...response, error: 400, mensaje: 'error' }
-        reject(response);
-      } else {
-        response = { data: res, error: 200, mensaje: 'exito' }
-        resolve(response);
+    dbConn.query(
+      `
+      Select 
+        p.idPermiso, 
+        p.nombre,
+        p.descripcion,
+        p.idRol,
+        p.seccion,
+        r.nombre as nombreRol
+      from permiso p inner join rol r on p.idRol = r.idRol
+    `,
+      (err, res: IPermiso[]) => {
+        let response: IResponse = {} as IResponse;
+        if (err) {
+          response = { ...response, error: 400, mensaje: "error" };
+          reject(response);
+        } else {
+          response = { data: res, error: 200, mensaje: "exito" };
+          resolve(response);
+        }
       }
-    });
-
-  })
-
-}
+    );
+  });
+};
 
 export const buscarPermisoPorId = (id: number): Promise<IResponse> => {
   return new Promise((resolve, reject) => {
-    dbConn.query(`Select * from permiso where idPermiso = ${id}`, (err, res: IPermiso) => {
-      let response: IResponse = {} as IResponse;
-      if (err) {
-        response = { ...response, error: 400, mensaje: 'error' }
-        reject(response);
-      } else {
-        response = { data: res[0], error: 200, mensaje: 'exito' }
-        resolve(response);
+    dbConn.query(
+      `Select * from permiso where idPermiso = ${id}`,
+      (err, res: IPermiso) => {
+        let response: IResponse = {} as IResponse;
+        if (err) {
+          response = { ...response, error: 400, mensaje: "error" };
+          reject(response);
+        } else {
+          response = { data: res[0], error: 200, mensaje: "exito" };
+          resolve(response);
+        }
       }
-    });
-  })
-}
+    );
+  });
+};
+
+export const buscarPermisoPorIdRol = (idRol: number): Promise<IResponse> => {
+  return new Promise((resolve, reject) => {
+    dbConn.query(
+      `Select * from permiso where idRol = ${idRol}`,
+      (err, res: IPermiso) => {
+        let response: IResponse = {} as IResponse;
+        if (err) {
+          response = { ...response, error: 400, mensaje: "error" };
+          reject(response);
+        } else {
+          response = { data: res, error: 200, mensaje: "exito" };
+          resolve(response);
+        }
+      }
+    );
+  });
+};
 
 export const insertarPermiso = (permiso: IPermiso): Promise<IResponse> => {
   console.log(permiso);
@@ -41,21 +72,23 @@ export const insertarPermiso = (permiso: IPermiso): Promise<IResponse> => {
       `call insertPermiso(
       '${permiso.nombre}',
       '${permiso.descripcion}',
-      '${permiso.url}',
+      'no',
+      '${permiso.seccion}',
       ${permiso.idRol}
-      )`, (err, res: IPermiso) => {
-      let response: IResponse = {} as IResponse;
-      if (err) {
-        response = { ...response, error: 400, mensaje: 'error' }
-        reject(response);
-      } else {
-        response = { data: res, error: 200, mensaje: 'exito' }
-        resolve(response);
+      )`,
+      (err, res: IPermiso) => {
+        let response: IResponse = {} as IResponse;
+        if (err) {
+          response = { ...response, error: 400, mensaje: "error" };
+          reject(response);
+        } else {
+          response = { data: res, error: 200, mensaje: "exito" };
+          resolve(response);
+        }
       }
-    })
-  })
-}
-
+    );
+  });
+};
 
 export const actualizarPermiso = (permiso: IPermiso): Promise<IResponse> => {
   return new Promise((resolve, reject) => {
@@ -64,33 +97,38 @@ export const actualizarPermiso = (permiso: IPermiso): Promise<IResponse> => {
        ${permiso.idPermiso},
        '${permiso.nombre}',
        '${permiso.descripcion}',
-       '${permiso.url}',
+       'no',
+       '${permiso.seccion}',
        ${permiso.idRol}
-      )`, (err, res: IPermiso) => {
-      let response: IResponse = {} as IResponse;
-      if (err) {
-        response = { ...response, error: 400, mensaje: 'error' }
-        reject(response);
-      } else {
-        response = { data: res, error: 200, mensaje: 'exito' }
-        resolve(response)
+      )`,
+      (err, res: IPermiso) => {
+        let response: IResponse = {} as IResponse;
+        if (err) {
+          response = { ...response, error: 400, mensaje: "error" };
+          reject(response);
+        } else {
+          response = { data: res, error: 200, mensaje: "exito" };
+          resolve(response);
+        }
       }
-    })
-  })
-}
-
+    );
+  });
+};
 
 export const eliminarPermisoPorId = (id: number): Promise<any> => {
   return new Promise((resolve, reject) => {
-    dbConn.query(`Delete from permiso where idPermiso = ${id}`, (err, res: any) => {
-      let response: IResponse = {} as IResponse;
-      if (err) {
-        response = { ...response, error: 400, mensaje: 'error' }
-        reject('Error al eliminar');
-      } else {
-        response = { data: res, error: 200, mensaje: 'exito' }
-        resolve(response)
+    dbConn.query(
+      `Delete from permiso where idPermiso = ${id}`,
+      (err, res: any) => {
+        let response: IResponse = {} as IResponse;
+        if (err) {
+          response = { ...response, error: 400, mensaje: "error" };
+          reject("Error al eliminar");
+        } else {
+          response = { data: res, error: 200, mensaje: "exito" };
+          resolve(response);
+        }
       }
-    });
-  })
-}
+    );
+  });
+};

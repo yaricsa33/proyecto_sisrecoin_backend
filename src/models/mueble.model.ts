@@ -214,7 +214,8 @@ export const buscarMueblesAsignadosUsuarioPorId = (
         mu.nombreCliente,
         mu.fechaEstimadaEntrega,
         mu.tipo,
-        muu.finalizado 
+        muu.finalizado,
+        mu.estado
       FROM muebleusuario AS muu
       INNER JOIN mueble AS mu
       ON  muu.idMueble = mu.idMueble
@@ -225,7 +226,7 @@ export const buscarMueblesAsignadosUsuarioPorId = (
           response = { ...response, error: 400, mensaje: "error" };
           reject(response);
         } else {
-          response = { data: res[0], error: 200, mensaje: "exito" };
+          response = { data: res, error: 200, mensaje: "exito" };
           resolve(response);
         }
       }

@@ -101,7 +101,7 @@ export const getMueblesAsignadosUsuarioPorId = (req: any, res: any) => {
 };
 
 export const putFinalizarMueble = (req: any, res: any) => {
-  finalizarMueble(req.params.idMueble, req.params.idUsuario)
+  finalizarMueble(req.body.idMueble, req.body.idUsuario)
     .then((data) => {
       res.json(data);
     })

@@ -1,22 +1,26 @@
-import express from 'express'
+import express from "express";
 
-import { deleteEliminarPermiso, getPermiso, getPermisoPorId, postInsertarPermiso, putActualizarPermiso } from '../controllers/permiso.controller'
+import {
+  deleteEliminarPermiso,
+  getPermiso,
+  getPermisoPorId,
+  getPermisoPorIdRol,
+  postInsertarPermiso,
+  putActualizarPermiso,
+} from "../controllers/permiso.controller";
 
+const router = express.Router();
 
-const router = express.Router()
+router.get("/", getPermiso);
 
+router.get("/:id", getPermisoPorId);
 
+router.get("/permisoPorIdRol/:idRol", getPermisoPorIdRol);
 
-router.get('/', getPermiso)
+router.post("/", postInsertarPermiso);
 
-router.get('/:id', getPermisoPorId)
+router.put("/", putActualizarPermiso);
 
-router.post('/', postInsertarPermiso)
+router.delete("/:id", deleteEliminarPermiso);
 
-router.put('/', putActualizarPermiso)
-
-router.delete('/:id', deleteEliminarPermiso)
-
-
-
-export default router 
+export default router;
