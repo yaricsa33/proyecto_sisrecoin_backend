@@ -12,18 +12,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.eliminarMueblePorId = exports.actualizarMueble = exports.insertarMuebleMateriaPrima = exports.insertarMuebleUsuario = exports.insertarMuebleListados = exports.insertarMueble = exports.buscarMateriasPrimasAsignadosMueble = exports.buscarUsuariosAsignadosMueble = exports.buscarMueblePorId = exports.buscarMueble = void 0;
+exports.finalizarMueble = exports.buscarMueblesAsignadosUsuarioPorId = exports.eliminarMueblePorId = exports.actualizarMueble = exports.insertarMuebleMateriaPrima = exports.insertarMuebleUsuario = exports.insertarMuebleListados = exports.insertarMueble = exports.buscarMateriasPrimasAsignadosMueble = exports.buscarUsuariosAsignadosMueble = exports.buscarMueblePorId = exports.buscarMueble = void 0;
 const db_config_1 = __importDefault(require("./db.config"));
 const buscarMueble = () => {
     return new Promise((resolve, reject) => {
         db_config_1.default.query("Select * from mueble", (err, res) => {
             let response = {};
             if (err) {
-                response = Object.assign(Object.assign({}, response), { error: 400, mensaje: 'error' });
+                response = Object.assign(Object.assign({}, response), { error: 400, mensaje: "error" });
                 reject(response);
             }
             else {
-                response = { data: res, error: 200, mensaje: 'exito' };
+                response = { data: res, error: 200, mensaje: "exito" };
                 resolve(response);
             }
         });
@@ -35,11 +35,11 @@ const buscarMueblePorId = (id) => {
         db_config_1.default.query(`Select * from mueble where idMueble =${id}`, (err, res) => {
             let response = {};
             if (err) {
-                response = Object.assign(Object.assign({}, response), { error: 400, mensaje: 'error' });
+                response = Object.assign(Object.assign({}, response), { error: 400, mensaje: "error" });
                 reject(response);
             }
             else {
-                response = { data: res[0], error: 200, mensaje: 'exito' };
+                response = { data: res[0], error: 200, mensaje: "exito" };
                 resolve(response);
             }
         });
@@ -56,11 +56,11 @@ const buscarUsuariosAsignadosMueble = (id) => {
       where mu.idMueble = ${id}`, (err, res) => {
             let response = {};
             if (err) {
-                response = Object.assign(Object.assign({}, response), { error: 400, mensaje: 'error' });
+                response = Object.assign(Object.assign({}, response), { error: 400, mensaje: "error" });
                 reject(response);
             }
             else {
-                response = { data: res, error: 200, mensaje: 'exito' };
+                response = { data: res, error: 200, mensaje: "exito" };
                 resolve(response);
             }
         });
@@ -76,11 +76,11 @@ const buscarMateriasPrimasAsignadosMueble = (id) => {
       where mmp.idMueble = ${id}`, (err, res) => {
             let response = {};
             if (err) {
-                response = Object.assign(Object.assign({}, response), { error: 400, mensaje: 'error' });
+                response = Object.assign(Object.assign({}, response), { error: 400, mensaje: "error" });
                 reject(response);
             }
             else {
-                response = { data: res, error: 200, mensaje: 'exito' };
+                response = { data: res, error: 200, mensaje: "exito" };
                 resolve(response);
             }
         });
@@ -102,11 +102,11 @@ const insertarMueble = (mueble) => {
     )`, (err, res) => {
             let response = {};
             if (err) {
-                response = Object.assign(Object.assign({}, response), { error: 400, mensaje: 'error' });
+                response = Object.assign(Object.assign({}, response), { error: 400, mensaje: "error" });
                 reject(response);
             }
             else {
-                response = { data: res[0][0], error: 200, mensaje: 'exito' };
+                response = { data: res[0][0], error: 200, mensaje: "exito" };
                 resolve(response);
             }
         });
@@ -122,7 +122,7 @@ const insertarMuebleListados = (listados) => {
             yield (0, exports.insertarMuebleMateriaPrima)(listados.materiaPrima[i], listados.idMueble);
         }
         let response = {};
-        response = { data: null, error: 200, mensaje: 'exito' };
+        response = { data: null, error: 200, mensaje: "exito" };
         resolve(response);
     }));
 };
@@ -133,8 +133,8 @@ const insertarMuebleUsuario = (muebleUsuario, idMueble) => {
     ${muebleUsuario.idUsuario},
     ${muebleUsuario.valor}
   )`, (err, res) => {
-        console.log('res', res);
-        console.log('err', err);
+        console.log("res", res);
+        console.log("err", err);
     });
 };
 exports.insertarMuebleUsuario = insertarMuebleUsuario;
@@ -161,11 +161,11 @@ const actualizarMueble = (mueble) => {
       )`, (err, res) => {
             let response = {};
             if (err) {
-                response = Object.assign(Object.assign({}, response), { error: 400, mensaje: 'error' });
+                response = Object.assign(Object.assign({}, response), { error: 400, mensaje: "error" });
                 reject(response);
             }
             else {
-                response = { data: res, error: 200, mensaje: 'exito' };
+                response = { data: res, error: 200, mensaje: "exito" };
                 resolve(response);
             }
         });
@@ -177,14 +177,62 @@ const eliminarMueblePorId = (id) => {
         db_config_1.default.query(`call deleteMueble (${id}) `, (err, res) => {
             let response = {};
             if (err) {
-                response = Object.assign(Object.assign({}, response), { error: 400, mensaje: 'error' });
+                response = Object.assign(Object.assign({}, response), { error: 400, mensaje: "error" });
                 reject(response);
             }
             else {
-                response = { data: res, error: 200, mensaje: 'exito' };
+                response = { data: res, error: 200, mensaje: "exito" };
                 resolve(response);
             }
         });
     });
 };
 exports.eliminarMueblePorId = eliminarMueblePorId;
+const buscarMueblesAsignadosUsuarioPorId = (id) => {
+    return new Promise((resolve, reject) => {
+        db_config_1.default.query(`SELECT
+        mu.idMueble,
+        mu.nombre,
+        mu.descripcion, 
+        mu.nombreCliente,
+        mu.fechaEstimadaEntrega,
+        mu.tipo,
+        muu.finalizado,
+        mu.estado
+      FROM muebleusuario AS muu
+      INNER JOIN mueble AS mu
+      ON  muu.idMueble = mu.idMueble
+      WHERE muu.idUsuario = ${id}`, (err, res) => {
+            let response = {};
+            if (err) {
+                response = Object.assign(Object.assign({}, response), { error: 400, mensaje: "error" });
+                reject(response);
+            }
+            else {
+                response = { data: res, error: 200, mensaje: "exito" };
+                resolve(response);
+            }
+        });
+    });
+};
+exports.buscarMueblesAsignadosUsuarioPorId = buscarMueblesAsignadosUsuarioPorId;
+//que crear ruta y controlador
+const finalizarMueble = (idMueble, idUsuario) => {
+    return new Promise((resolve, reject) => {
+        db_config_1.default.query(`call finalizarMueble 
+    (${idMueble},
+      ${idUsuario} )
+     `, (err, res) => {
+            let response = {};
+            if (err) {
+                response = Object.assign(Object.assign({}, response), { error: 400, mensaje: "error" });
+                reject(response);
+            }
+            else {
+                response = { data: res, error: 200, mensaje: "exito" };
+                resolve(response);
+            }
+        });
+    });
+};
+exports.finalizarMueble = finalizarMueble;
