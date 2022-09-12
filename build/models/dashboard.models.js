@@ -27,7 +27,7 @@ exports.consultaCantidadVentas = consultaCantidadVentas;
 const consultarGanancias = (mes, ano) => {
     return new Promise((resolve, reject) => {
         db_config_1.default.query(`
-      SELECT SUM(valorFinal) - (select SUM(costoMateriaPrima) from mueble where MONTH(fechaFabricacion) = ${mes} AND YEAR (fechaFabricacion) = ${ano}) AS Patrimonio
+      SELECT SUM(valorFinal) - (select ifnull(SUM(costoMateriaPrima),0) from mueble where MONTH(fechaFabricacion) = ${mes} AND YEAR (fechaFabricacion) = ${ano}) AS Patrimonio
       FROM venta 
       where MONTH(fechaEntrega) = ${mes} AND YEAR (fechaEntrega) = ${ano};
     `, (err, res) => {
